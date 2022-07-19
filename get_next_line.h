@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-vasc <vde-vasc@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/19 12:49:29 by vde-vasc          #+#    #+#             */
-/*   Updated: 2022/07/19 16:19:14 by vde-vasc         ###   ########.fr       */
+/*   Created: 2022/07/19 13:00:30 by vde-vasc          #+#    #+#             */
+/*   Updated: 2022/07/19 16:36:44 by vde-vasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*get_next_line(int fd)
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include <unistd.h>
 
-{
-	static char	*buffer;
-}
+# define BUFFER_SIZE 42
+char	*get_next_line(int fd);
+
+#endif

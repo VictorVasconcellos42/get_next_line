@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-vasc <vde-vasc@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/19 12:49:29 by vde-vasc          #+#    #+#             */
-/*   Updated: 2022/07/19 16:19:14 by vde-vasc         ###   ########.fr       */
+/*   Created: 2022/07/19 16:06:52 by vde-vasc          #+#    #+#             */
+/*   Updated: 2022/07/19 16:17:58 by vde-vasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*get_next_line(int fd)
+#include "get_next_line.h"
+
+int	main(void)
 
 {
-	static char	*buffer;
+	int	fd;
+
+	fd = open("victor.txt", O_RDONLY);
+	
 }
