@@ -6,7 +6,7 @@
 /*   By: vde-vasc <vde-vasc@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:49:29 by vde-vasc          #+#    #+#             */
-/*   Updated: 2022/07/25 10:27:43 by vde-vasc         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:11:52 by vde-vasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*read_rest(char *string)
 
 	i = 0;
 	if (!(string) || string[i] == '\0')
-	{i
+	{
 		free(string);
 		return (NULL);
 	}
@@ -47,7 +47,9 @@ char	*line_cut(char *string)
 	char	*line;
 
 	i = 0;
-	if ((!(string) || string[i] == '\0'))
+	if (!(string))
+		return (NULL);
+	else if (string[i] == '\0')
 	{
 		free(string);
 		return (NULL);
@@ -85,25 +87,28 @@ char	*read_string(int fd, char *backup)
 	char	*aux;
 	int		buffer;
 
-	buffer = 1;	
+	buffer = 1;
+	aux = malloc(BUFFER_SIZE + 1);
 	if (!(backup))
 		backup = ft_strdup("\0");
-	aux = malloc(BUFFER_SIZE + 1);
 	if (!(aux))
 		return (NULL);
-	while (buffer && !(ft_strchr(backup, '\n')))
+	while (buffer > 0 && !(ft_strchr(backup, '\n')))
 	{
 		buffer = read(fd, aux, BUFFER_SIZE);
-		if (buffer < 0 || fd < 0)
-		{
-			free(aux);
-			return (NULL);
-		}
+		if (buffer < 0)
+			break ;
 		aux[buffer] = '\0';
 		backup = join_string(backup, aux);
 	}
 	free(aux);
-	return (backup);
+	if (buffer < 0)
+	{
+		free(backup);
+		return (NULL);
+	}
+	else
+		return (backup);
 }
 
 
@@ -113,14 +118,18 @@ char	*get_next_line(int fd)
 	static char	*backup;
 	char		*my_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	backup = read_string(fd, backup);
 	if (!(backup))
 		return (NULL);
 	my_line = line_cut(backup);
 	if (!(my_line))
+	{
+		if (backup != NULL)
+			backup = NULL;
 		return (NULL);
+	}
 	backup = read_rest(backup);
 	return (my_line);	
 }
