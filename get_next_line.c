@@ -6,12 +6,25 @@
 /*   By: vde-vasc <vde-vasc@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:49:29 by vde-vasc          #+#    #+#             */
-/*   Updated: 2022/07/25 15:11:52 by vde-vasc         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:59:41 by vde-vasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+
+char	*check_string(char *string, int i)
+
+{
+	if (!(string))
+		return (NULL);
+	else if (string[i] == '\0')
+	{
+		free(string);
+		return (NULL);
+	}
+	return (string);
+}
 
 char	*read_rest(char *string)
 
@@ -40,27 +53,17 @@ char	*read_rest(char *string)
 	return (rest);
 }
 
-char	*line_cut(char *string)
+char	*line_cut(char *string, int i)
 
 {
-	int		i;
 	char	*line;
 
-	i = 0;
-	if (!(string))
-		return (NULL);
-	else if (string[i] == '\0')
-	{
-		free(string);
-		return (NULL);
-	}
+	if (!(string) || string[i] == '\0')
+		return (check_string(string, 0));
 	while (string[i] && string[i] != '\n')
 		i++;
 	if (string[i] == '\n')
-	{
-		i++;
-		line = malloc(sizeof(char) * i + 1);
-	}
+		line = malloc(sizeof(char) * (++i) + 1);
 	else
 		line = malloc(i + 1);
 	if (!(line))
@@ -72,10 +75,7 @@ char	*line_cut(char *string)
 		i++;
 	}
 	if (string[i] == '\n')
-	{
-		line[i] = '\n';
-		i++;
-	}
+		line[i++] = '\n';
 	line[i] = '\0';
 	free(string);
 	return (line);
@@ -111,7 +111,6 @@ char	*read_string(int fd, char *backup)
 		return (backup);
 }
 
-
 char	*get_next_line(int fd)
 
 {
@@ -123,7 +122,7 @@ char	*get_next_line(int fd)
 	backup = read_string(fd, backup);
 	if (!(backup))
 		return (NULL);
-	my_line = line_cut(backup);
+	my_line = line_cut(backup, 0);
 	if (!(my_line))
 	{
 		if (backup != NULL)
@@ -131,5 +130,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	backup = read_rest(backup);
-	return (my_line);	
+	return (my_line);
 }

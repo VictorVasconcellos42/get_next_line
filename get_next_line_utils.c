@@ -6,7 +6,7 @@
 /*   By: vde-vasc <vde-vasc@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 13:43:50 by vde-vasc          #+#    #+#             */
-/*   Updated: 2022/07/25 08:05:41 by vde-vasc         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:06:44 by vde-vasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ char	*ft_strdup(const char *s1)
 
 {
 	char	*string;
-	int	len;
+	int		len;
 	char	*dest;
-	int	i;
+	int		i;
 
 	i = 0;
+	if (!(s1))
+		return (NULL);
 	string = (char *) s1;
 	len = ft_strlen(s1);
 	dest = (char *) malloc (len + 1);
@@ -67,11 +69,13 @@ char	*join_string(char *s1, char *s2)
 
 {
 	char	*string;
-	int	len_s1;
-	int	len_s2;
+	int		len_s1;
+	int		len_s2;
 
 	if (!(s1))
-		return (ft_strdup(s2));
+		return (ft_strdup("\0"));
+	if ((!s1) || (!s2))
+		return (NULL);
 	len_s1 = 0;
 	len_s2 = 0;
 	string = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
@@ -86,5 +90,6 @@ char	*join_string(char *s1, char *s2)
 		string[len_s1++] = s2[len_s2++];
 	string[len_s1] = '\0';
 	free(s1);
+	s1 = NULL;
 	return (string);
 }
